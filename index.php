@@ -1,6 +1,7 @@
 <?php
 ob_start();
 include "autoload.php";
+use core\Log as Log;
 $method = $_GET["_p"];
 
 $rq = $_POST;
@@ -22,7 +23,7 @@ else if($method == "aviso" || $method == "/test/aviso"){
 	$current = $cb->update(["ID"=>$rq["cb_order_id"],"payed"=>"1"]);
 	$rs = '<paymentAvisoResponse performedDatetime="'.date("Y-m-dTH:i:s.000+03:00").'" code="0" invoiceId="'.$rq["invoiceId"].'" shopId="'.$rq["shopId"].'"/>';
 }
-ob_end_clean();
+Log::debug(ob_get_clean());
 header('Content-Type: application/xml; charset=utf-8');
 echo $rs;
 ?>
